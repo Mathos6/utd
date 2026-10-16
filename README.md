@@ -50,22 +50,31 @@ Build from source (Go 1.24+):
 ```sh
 git clone https://github.com/Mathos6/utd 
 cd utd
-go build -o utd .
-sudo install -m 0755 utd /usr/local/bin/utd
+go build -o build/bin/utd_$(go env GOARCH) .
+sudo install -m 0755 build/bin/utd_$(go env GOARCH) /usr/local/bin/utd
 ```
 
-Or with `make`:
+Or with `make`, which cross-compiles fully static binaries for `linux/amd64`
+and `linux/arm64` into `build/bin/`:
 
 ```sh
-make build      # produces ./utd
-make install    # installs to $PREFIX/bin (default: /usr/local)
+make build        # -> build/bin/utd_amd64 and build/bin/utd_arm64
+make install      # installs the host-architecture binary as $PREFIX/bin/utd
+make checksums    # -> build/bin/SHA256SUMS
+make help         # list every target
 ```
 
-With the version embedded:
+With the version embedded(the `make` targets do this automatically from
+`git describe`):
 
 ```sh
-go build -ldflags "-X main.version=$(git describe --tags 2>/dev/null || echo dev)" -o utd .
+go build -ldflags "-X main.version=$(git describe --tags 2>/dev/null || echo dev)" \
+  -o build/bin/utd_$(go env GOARCH) .
 ```
+
+
+`make build` sets `CGO_ENABLED=0`, so the produced binaries are statically
+linked and have no libc dependency.
 
 ## Usage
 
@@ -214,7 +223,6 @@ with `--no-sandbox`.
   the renamed-package detection work automatically. Without them, `utd` still
   resolves same-named packages and the alias table, and you can always use
   `--package`.
-- The packages utd downloads at runtime are the distro's normal dynamically-linked binaries, so the host still needs glibc. It's not a fully static environment.
 
 
 ## Limitations

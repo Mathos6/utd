@@ -214,6 +214,8 @@ with `--no-sandbox`.
   the renamed-package detection work automatically. Without them, `utd` still
   resolves same-named packages and the alias table, and you can always use
   `--package`.
+- The packages utd downloads at runtime are the distro's normal dynamically-linked binaries, so the host still needs glibc. It's not a fully static environment.
+
 
 ## Limitations
 

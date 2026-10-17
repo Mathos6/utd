@@ -240,7 +240,7 @@ with `--no-sandbox`.
   the network. It is a convenience tool, not a jail.
   
   
-# How it compares to other tools
+## How it compares to other tools
 
 Same idea as nix run, npx and pipx run, but for your distro's native apt packages: no extra runtime, no daemon, no root, and it cleans up after itself. Unlike docker run, it isn't a sandbox: it runs the real binaries as you.
 

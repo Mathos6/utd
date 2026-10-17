@@ -1,5 +1,7 @@
 # utd — Use Then Delete
 
+
+![A short demo](assets/demo.gif)
 `utd` runs a command that is **not installed** on your system. It figures out
 which distribution package provides that command, downloads the package *and
 its missing dependencies* into a temporary directory, extracts them there and
